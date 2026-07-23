@@ -1,14 +1,14 @@
-Router#show running-config 
+R2#show running-config 
 Building configuration...
 
-Current configuration : 844 bytes
+Current configuration : 1155 bytes
 !
 version 15.1
 no service timestamps log datetime msec
 no service timestamps debug datetime msec
-no service password-encryption
+service password-encryption
 !
-hostname Router
+hostname R2
 !
 !
 !
@@ -22,12 +22,10 @@ no ipv6 cef
 !
 !
 !
-!
-license udi pid CISCO2911/K9 sn FTX15247N8A-
-!
+username admin privilege 15 secret 5 $1$mERr$5.a6P4JqbNiMX01usIfka/
 !
 !
-!
+license udi pid CISCO2911/K9 sn FTX1524NP17-
 !
 !
 !
@@ -35,6 +33,13 @@ license udi pid CISCO2911/K9 sn FTX15247N8A-
 !
 !
 !
+!
+!
+!
+!
+ip ssh version 2
+ip ssh time-out 60
+ip domain-name company.local
 !
 !
 spanning-tree mode pvst
@@ -50,7 +55,7 @@ interface GigabitEthernet0/0
  speed auto
 !
 interface GigabitEthernet0/1
- ip address 192.168.1.10 255.255.255.252
+ ip address 192.168.1.9 255.255.255.252
  duplex auto
  speed auto
 !
@@ -75,16 +80,24 @@ ip flow-export version 9
 !
 !
 !
+banner motd ^C
+AUTHORIZED ACCESS ONLY 
+Unauthorized access to this device is prohibited
+All activity is monitored and logged
+^C
 !
 !
 !
 !
 line con 0
+ exec-timeout 5 0
+ login local
 !
 line aux 0
 !
 line vty 0 4
- login
+ login local
+ transport input ssh
 !
 !
 !
