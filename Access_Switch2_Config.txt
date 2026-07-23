@@ -1,31 +1,41 @@
-Switch#show running-config 
+SW2#show running-config 
 Building configuration...
 
-Current configuration : 1374 bytes
+Current configuration : 1891 bytes
 !
 version 15.0
 no service timestamps log datetime msec
 no service timestamps debug datetime msec
-no service password-encryption
+service password-encryption
 !
-hostname Switch
-!
-!
+hostname SW2
 !
 !
 !
+ip ssh version 2
+ip ssh time-out 60
+ip domain-name company.local
 !
-spanning-tree mode rapid-pvst
+username admin secret 5 $1$mERr$5.a6P4JqbNiMX01usIfka/
+!
+ip arp inspection vlan 20
+!
+!
+spanning-tree mode pvst
 spanning-tree extend system-id
 !
 interface FastEthernet0/1
  switchport access vlan 20
  switchport mode access
+ switchport port-security
+ switchport port-security mac-address sticky 
  spanning-tree portfast
 !
 interface FastEthernet0/2
- switchport access vlan 20
+ switchport access vlan 50
  switchport mode access
+ switchport port-security
+ switchport port-security mac-address sticky 
  spanning-tree portfast
 !
 interface FastEthernet0/3
@@ -74,23 +84,36 @@ interface FastEthernet0/24
 !
 interface GigabitEthernet0/1
  switchport trunk allowed vlan 10,20,30,40,50
+ ip arp inspection trust
  switchport mode trunk
 !
 interface GigabitEthernet0/2
  switchport trunk allowed vlan 10,20,30,40,50
+ ip arp inspection trust
  switchport mode trunk
 !
 interface Vlan1
  no ip address
  shutdown
 !
+interface Vlan20
+ ip address 10.20.20.2 255.255.255.0
+!
+ip default-gateway 10.20.20.254
+!
+banner motd ^C
+AUTHORIZED ACCESS ONLY
+^C
 !
 !
 !
 line con 0
+ login local
+ exec-timeout 5 0
 !
 line vty 0 4
- login
+ login local
+ transport input ssh
 line vty 5 15
  login
 !
