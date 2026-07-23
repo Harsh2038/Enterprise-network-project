@@ -89,6 +89,45 @@ Despite correctly configured DHCP pools, clients received an IP but no gateway/D
 **5. Hardware port assumptions caused early rework**
 Initial cabling plans assumed Gigabit ports that didn't exist on certain switch models in use. Learned to always verify real port availability with `show ip interface brief` or the Physical tab before finalizing a cabling plan.
 
+## 🔒 Security hardening layer
+
+After completing the base campus network, a comprehensive security hardening 
+layer was implemented across all devices and VLANs, covering the following:
+
+### SSH hardening (all devices)
+- Disabled Telnet completely — SSH version 2 only on all VTY lines
+- RSA 1024-bit key generation tied to hostname + domain identity
+- Local username/password authentication (`login local`) on both VTY 
+  and console lines
+- Idle session timeout set to 5 minutes (`exec-timeout 5 0`)
+- All passwords encrypted in running config (`service password-encryption`)
+- Legal warning banner on every device (`banner motd`)
+
+### Port security (all access switches)
+- Maximum 1 MAC address per access port
+- Sticky MAC learning — first device auto-learned and locked in
+- Violation mode: shutdown — port enters err-disabled state on 
+  unauthorized device detection
+- All unused ports (Fa0/4–Fa0/24) administratively shut down to 
+  prevent unauthorized physical access
+
+### Dynamic ARP Inspection (DAI)
+- Enabled on all switches for all VLANs
+- Validates ARP packets against DHCP snooping binding table
+- Prevents ARP poisoning and Man-in-the-Middle attacks
+- Trusted/untrusted port designation mirrors DHCP snooping config
+
+
+### Security stack summary
+
+| Feature | Protects Against |
+|---|---|
+| SSH hardening | Eavesdropping on management traffic |
+| Banner | Unauthorized access, legal liability |
+| Port security | Rogue devices, MAC flooding |
+| Unused port shutdown | Physical unauthorized access |
+| DAI | ARP poisoning, Man-in-the-Middle |
+
 ## 📁 Files in this repo
 
 - `project1.pkt` — full Packet Tracer file (campus network + WAN extension)
