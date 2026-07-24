@@ -1,14 +1,13 @@
-Router#show running-config 
 Building configuration...
 
-Current configuration : 1166 bytes
+Current configuration : 1485 bytes
 !
 version 15.1
 no service timestamps log datetime msec
 no service timestamps debug datetime msec
-no service password-encryption
+service password-encryption
 !
-hostname Router
+hostname Core-R1
 !
 !
 !
@@ -21,6 +20,8 @@ ip cef
 no ipv6 cef
 !
 !
+!
+username admin privilege 15 secret 5 $1$mERr$5.a6P4JqbNiMX01usIfka/
 !
 !
 license udi pid CISCO2911/K9 sn FTX1524SRV2-
@@ -36,6 +37,9 @@ license boot module c2900 technology-package securityk9
 !
 !
 !
+ip ssh version 2
+ip ssh time-out 60
+ip domain-name company.local
 !
 !
 spanning-tree mode pvst
@@ -84,17 +88,26 @@ ip flow-export version 9
 ip access-list extended VPN-TRAFFIC
  permit ip 10.10.10.0 0.0.0.255 172.16.1.0 0.0.0.255
 !
+banner motd ^C
+AUTHORIZED ACCESS ONLY
+Unauthorized access to this device is prohibited.
+All activity is monitored and logged.
+
+^C
 !
 !
 !
 snmp-server community public RO
 !
 line con 0
+ exec-timeout 5 0
+ login local
 !
 line aux 0
 !
 line vty 0 4
- login
+ login local
+ transport input ssh
 !
 !
 !
