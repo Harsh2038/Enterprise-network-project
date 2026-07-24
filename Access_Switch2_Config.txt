@@ -1,14 +1,14 @@
-SW2#show running-config 
+Acc-SW2#show running-config 
 Building configuration...
 
-Current configuration : 1891 bytes
+Current configuration : 1823 bytes
 !
 version 15.0
 no service timestamps log datetime msec
 no service timestamps debug datetime msec
 service password-encryption
 !
-hostname SW2
+hostname Acc-SW2
 !
 !
 !
@@ -18,10 +18,9 @@ ip domain-name company.local
 !
 username admin secret 5 $1$mERr$5.a6P4JqbNiMX01usIfka/
 !
-ip arp inspection vlan 20
 !
 !
-spanning-tree mode pvst
+spanning-tree mode rapid-pvst
 spanning-tree extend system-id
 !
 interface FastEthernet0/1
@@ -32,7 +31,7 @@ interface FastEthernet0/1
  spanning-tree portfast
 !
 interface FastEthernet0/2
- switchport access vlan 50
+ switchport access vlan 20
  switchport mode access
  switchport port-security
  switchport port-security mac-address sticky 
@@ -84,25 +83,20 @@ interface FastEthernet0/24
 !
 interface GigabitEthernet0/1
  switchport trunk allowed vlan 10,20,30,40,50
- ip arp inspection trust
  switchport mode trunk
 !
 interface GigabitEthernet0/2
  switchport trunk allowed vlan 10,20,30,40,50
- ip arp inspection trust
  switchport mode trunk
 !
 interface Vlan1
  no ip address
  shutdown
 !
-interface Vlan20
- ip address 10.20.20.2 255.255.255.0
-!
-ip default-gateway 10.20.20.254
-!
 banner motd ^C
 AUTHORIZED ACCESS ONLY
+Unauthorized access to this device is prohibited.
+All activity is monitored and logged.
 ^C
 !
 !
