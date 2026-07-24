@@ -1,14 +1,14 @@
-SW3#show running-config 
+Acc-SW3#show running-config 
 Building configuration...
 
-Current configuration : 1738 bytes
+Current configuration : 1720 bytes
 !
 version 15.0
 no service timestamps log datetime msec
 no service timestamps debug datetime msec
 service password-encryption
 !
-hostname SW3
+hostname Acc-SW3
 !
 !
 !
@@ -18,10 +18,9 @@ ip domain-name company.local
 !
 username admin secret 5 $1$mERr$5.a6P4JqbNiMX01usIfka/
 !
-ip arp inspection vlan 30
 !
 !
-spanning-tree mode pvst
+spanning-tree mode rapid-pvst
 spanning-tree extend system-id
 !
 interface FastEthernet0/1
@@ -91,13 +90,10 @@ interface Vlan1
  no ip address
  shutdown
 !
-interface Vlan30
- ip address 10.30.30.2 255.255.255.0
-!
-ip default-gateway 10.30.30.254
-!
 banner motd ^C
 AUTHORIZED ACCESS ONLY
+Unauthorized access to this device is prohibited.
+All activity is monitored and logged.
 ^C
 !
 !
