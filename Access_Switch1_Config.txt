@@ -1,14 +1,14 @@
-SW1#show running-config 
+Acc-SW1#show running-config 
 Building configuration...
 
-Current configuration : 2069 bytes
+Current configuration : 2004 bytes
 !
 version 15.0
 no service timestamps log datetime msec
 no service timestamps debug datetime msec
 service password-encryption
 !
-hostname SW1
+hostname Acc-SW1
 !
 !
 !
@@ -21,7 +21,7 @@ username admin secret 5 $1$mERr$5.a6P4JqbNiMX01usIfka/
 ip arp inspection vlan 10
 !
 !
-spanning-tree mode pvst
+spanning-tree mode rapid-pvst
 spanning-tree extend system-id
 !
 interface FastEthernet0/1
@@ -29,6 +29,7 @@ interface FastEthernet0/1
  switchport mode access
  switchport port-security
  switchport port-security mac-address sticky 
+ switchport port-security mac-address sticky 0001.42A8.5177
  spanning-tree portfast
 !
 interface FastEthernet0/2
@@ -41,9 +42,6 @@ interface FastEthernet0/2
 interface FastEthernet0/3
  switchport access vlan 10
  switchport mode access
- switchport port-security
- switchport port-security mac-address sticky 
- switchport port-security mac-address sticky 0030.A3E3.120B
 !
 interface FastEthernet0/4
 !
@@ -101,13 +99,10 @@ interface Vlan1
  no ip address
  shutdown
 !
-interface Vlan10
- ip address 10.10.10.1 255.255.255.0
-!
-ip default-gateway 10.10.10.254
-!
 banner motd ^C
-AUTHORIZED ACCESS ONLY 
+AUTHORIZED ACCESS ONLY
+Unauthorized access to this device is prohibited.
+All activity is monitored and logged.
 ^C
 !
 !
