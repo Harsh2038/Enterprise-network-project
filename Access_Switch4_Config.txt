@@ -1,14 +1,14 @@
-SW4#show running-config 
+Acc-SW4#show running-config 
 Building configuration...
 
-Current configuration : 1833 bytes
+Current configuration : 1867 bytes
 !
 version 15.0
 no service timestamps log datetime msec
 no service timestamps debug datetime msec
 service password-encryption
 !
-hostname SW4
+hostname Acc-SW4
 !
 !
 !
@@ -18,21 +18,22 @@ ip domain-name company.local
 !
 username admin secret 5 $1$mERr$5.a6P4JqbNiMX01usIfka/
 !
-ip arp inspection vlan 40
 !
 !
-spanning-tree mode pvst
+spanning-tree mode rapid-pvst
 spanning-tree extend system-id
 !
 interface FastEthernet0/1
  switchport access vlan 40
  switchport mode access
+ switchport port-security
  switchport port-security mac-address sticky 
  spanning-tree portfast
 !
 interface FastEthernet0/2
  switchport access vlan 40
  switchport mode access
+ switchport port-security
  switchport port-security mac-address sticky 
  spanning-tree portfast
 !
@@ -94,13 +95,10 @@ interface Vlan1
  no ip address
  shutdown
 !
-interface Vlan40
- ip address 10.40.40.2 255.255.255.0
-!
-ip default-gateway 10.40.40.254
-!
 banner motd ^C
 AUTHORIZED ACCESS ONLY
+Unauthorized access to this device is prohibited.
+All activity is monitored and logged.
 ^C
 !
 !
