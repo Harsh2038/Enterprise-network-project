@@ -1,14 +1,14 @@
-R2#show running-config 
+Core-R2#show running-config 
 Building configuration...
 
-Current configuration : 1155 bytes
+Current configuration : 1162 bytes
 !
 version 15.1
 no service timestamps log datetime msec
 no service timestamps debug datetime msec
 service password-encryption
 !
-hostname R2
+hostname Core-R2
 !
 !
 !
@@ -25,7 +25,7 @@ no ipv6 cef
 username admin privilege 15 secret 5 $1$mERr$5.a6P4JqbNiMX01usIfka/
 !
 !
-license udi pid CISCO2911/K9 sn FTX1524NP17-
+license udi pid CISCO2911/K9 sn FTX15247N8A-
 !
 !
 !
@@ -55,7 +55,7 @@ interface GigabitEthernet0/0
  speed auto
 !
 interface GigabitEthernet0/1
- ip address 192.168.1.9 255.255.255.252
+ ip address 192.168.1.10 255.255.255.252
  duplex auto
  speed auto
 !
@@ -81,9 +81,9 @@ ip flow-export version 9
 !
 !
 banner motd ^C
-AUTHORIZED ACCESS ONLY 
-Unauthorized access to this device is prohibited
-All activity is monitored and logged
+AUTHORIZED ACCESS ONLY
+Unauthorized access to this device is prohibited.
+All activity is monitored and logged.
 ^C
 !
 !
