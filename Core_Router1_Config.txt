@@ -1,3 +1,4 @@
+Core-R1#show running-config 
 Building configuration...
 
 Current configuration : 1485 bytes
